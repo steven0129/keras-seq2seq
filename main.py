@@ -47,7 +47,7 @@ from keras.layers import Input, LSTM, Dense
 import numpy as np
 
 batch_size = 64  # Batch size for training.
-epochs = 500  # Number of epochs to train for.
+epochs = 100  # Number of epochs to train for.
 latent_dim = 256  # Latent dimensionality of the encoding space.
 num_samples = 10000  # Number of samples to train on.
 # Path to the data txt file on disk.
@@ -135,7 +135,7 @@ decoder_outputs = decoder_dense(decoder_outputs)
 model = Model([encoder_inputs, decoder_inputs], decoder_outputs)
 
 # Run training
-model.compile(optimizer='rmsprop', loss='categorical_crossentropy')
+model.compile(optimizer='rmsprop', metrics=['acc'], loss='categorical_crossentropy')
 model.fit([encoder_input_data, decoder_input_data], decoder_target_data,
           batch_size=batch_size,
           epochs=epochs,
