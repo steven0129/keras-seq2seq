@@ -33,6 +33,7 @@ class CharacterTable(object):
     + Decode the one hot integer representation to their character output
     + Decode a vector of probabilities to their character output
     """
+
     def __init__(self, chars):
         """Initialize character table.
         # Arguments
@@ -64,6 +65,7 @@ class colors:
     fail = '\033[91m'
     close = '\033[0m'
 
+
 # Parameters for the model and dataset.
 TRAINING_SIZE = 50000
 DIGITS = 3
@@ -82,8 +84,8 @@ expected = []
 seen = set()
 print('Generating data...')
 while len(questions) < TRAINING_SIZE:
-    f = lambda: int(''.join(np.random.choice(list('0123456789'))
-                    for i in range(np.random.randint(1, DIGITS + 1))))
+    def f(): return int(''.join(np.random.choice(list('0123456789'))
+                                for i in range(np.random.randint(1, DIGITS + 1))))
     a, b = f(), f()
     # Skip any addition questions we've already seen
     # Also skip any such that x+Y == Y+x (hence the sorting).
@@ -182,6 +184,9 @@ for iteration in range(1, 50):
         ind = np.random.randint(0, len(x_val))
         rowx, rowy = x_val[np.array([ind])], y_val[np.array([ind])]
         preds = model.predict_classes(rowx, verbose=0)
+
+        print(rowx)
+
         q = ctable.decode(rowx[0])
         correct = ctable.decode(rowy[0])
         guess = ctable.decode(preds[0], calc_argmax=False)
